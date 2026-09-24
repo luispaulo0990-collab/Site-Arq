@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none" class="talfe-logo">
+  <!-- Architectural Light & Space Glyph -->
+  <g class="talfe-glyph">
+    <!-- Spatial boundary box -->
+    <rect x="4" y="14" width="36" height="36" rx="3" stroke="#161917" stroke-width="2.5" fill="none" opacity="0.9" />
+    <!-- Diagonal ray of natural light opening -->
+    <path d="M4 32 L22 14" stroke="#566858" stroke-width="2" stroke-linecap="round" />
+    <path d="M14 50 L40 24" stroke="#566858" stroke-width="2.5" stroke-linecap="round" />
+    <!-- Focal sun/light point -->
+    <circle cx="28" cy="26" r="3" fill="#566858" />
+  </g>
+  <!-- Minimalist Wordmark -->
+  <text x="56" y="42" font-family="'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="32" font-weight="600" letter-spacing="-0.04em" fill="#161917">
+    talfe<tspan fill="#566858">.</tspan>
+  </text>
+  <text x="162" y="42" font-family="'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="11" font-weight="400" letter-spacing="0.22em" fill="#757D75">
+    ARQUITETURA
+  </text>
+</svg>

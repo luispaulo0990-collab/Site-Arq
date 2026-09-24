@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>talfe. - Arquitetura, Otimização de Espaços e Luz Natural</title>
+  <meta name="description" content="Estúdio de arquitetura contemporânea focado na forma da luz natural, proporções fluidas e otimização inteligente de espaços residenciais e corporativos.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="nav-container">
+      <a href="#inicio" class="brand-logo" aria-label="talfe arquitetura - Página inicial">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none">
+          <text x="10" y="40" font-family="'Times New Roman', serif" font-size="38" font-weight="400" letter-spacing="0.05em" fill="currentColor">
+            TALFE
+          </text>
+          <text x="12" y="54" font-family="'Outfit', system-ui, sans-serif" font-size="6" font-weight="400" letter-spacing="0.25em" fill="currentColor">
+            ARQUITETURA . ENGENHARIA . DESING
+          </text>
+        </svg>
+      </a>
+
+      <nav aria-label="Navegação principal">
+        <ul class="nav-menu">
+          <li><a href="#inicio" class="nav-link active">Início</a></li>
+          <li><a href="#obras" class="nav-link">Portfólio</a></li>
+          <li><a href="#sobre" class="nav-link">Sobre Nós</a></li>
+          <li><a href="#arquivos" class="nav-link">Tipologias</a></li>
+          <li><a href="#contato" class="nav-link">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#contato" class="btn btn-primary">
+          <span>Iniciar Projeto</span>
+          <span class="btn-pill-icon">→</span>
+        </a>
+        <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="inicio">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <!-- Text Element 1: Eyebrow -->
+          <div class="hero-badge">Estúdio de Arquitetura</div>
+          <!-- Text Element 2: Headline -->
+          <h1 class="hero-title">A forma da luz. <em>O espaço em equilíbrio.</em></h1>
+          <!-- Text Element 3: Subtext (< 20 palavras) -->
+          <p class="hero-subtext">
+            Projetamos arquiteturas contemporâneas onde a luz solar esculpe espaços fluidos, eficientes e naturalmente acolhedores.
+          </p>
+          <!-- Text Element 4: CTAs -->
+          <div class="hero-actions">
+            <a href="#obras" class="btn btn-primary">
+              <span>Explorar Obras</span>
+              <span class="btn-pill-icon">↓</span>
+            </a>
+            <a href="#sobre" class="btn btn-secondary">
+              <span>Conhecer o Estúdio</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-card">
+            <img src="assets/images/hero-arch.jpg" alt="Arquitetura contemporânea banhada em luz solar natural e integração com jardim">
+            <div class="floating-light-tag">
+              <span class="tag-label">Estudo Heliotérmico</span>
+              <span class="tag-title">Residência Lumina - Otimização de Luz Natural</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Works (Portfólio Highlight) -->
+  <section class="section" id="obras">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Obras Selecionadas.</h2>
+          <p class="section-subtext">
+            Projetos concebidos a partir da orientação solar e da máxima eficiência métrica.
+          </p>
+        </div>
+        <a href="#arquivos" class="section-link-action">
+          <span>Ver Todas as Obras ↗</span>
+        </a>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <article class="project-card">
+          <div class="project-media">
+            <img src="imagens para portifólio/Suíte Air Nature.jpeg" alt="Suíte Air Nature">
+            <span class="project-tag">Residencial</span>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div class="project-header-info">
+                <h3 class="project-name">Suíte Air Nature</h3>
+              </div>
+              <p class="project-summary">
+                Ambiente leve e integrado à natureza, proporcionando conforto e tranquilidade com uso de materiais orgânicos.
+              </p>
+            </div>
+            <div class="project-specs">
+              <a href="#" data-project-id="nature" style="margin-left: auto; text-decoration: underline;">Ver detalhes</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card">
+          <div class="project-media">
+            <img src="imagens para portifólio/Quarto Soft.jpeg" alt="Quarto Soft">
+            <span class="project-tag">Interiores</span>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div class="project-header-info">
+                <h3 class="project-name">Quarto Soft</h3>
+              </div>
+              <p class="project-summary">
+                Espaço íntimo projetado com texturas suaves e iluminação acolhedora para máximo relaxamento.
+              </p>
+            </div>
+            <div class="project-specs">
+              <a href="#" data-project-id="soft" style="margin-left: auto; text-decoration: underline;">Ver detalhes</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card">
+          <div class="project-media">
+            <img src="imagens para portifólio/Banheiro Green Light.jpeg" alt="Banheiro Green Light">
+            <span class="project-tag">Interiores</span>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div class="project-header-info">
+                <h3 class="project-name">Banheiro Green Light</h3>
+              </div>
+              <p class="project-summary">
+                Refúgio particular com elementos naturais, unindo funcionalidade e design biofílico.
+              </p>
+            </div>
+            <div class="project-specs">
+              <a href="#" data-project-id="green" style="margin-left: auto; text-decoration: underline;">Ver detalhes</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy & Sobre Nós (The Architecture of Light) -->
+  <section class="section philosophy-section" id="sobre">
+    <div class="container">
+      <div class="philosophy-grid">
+        <div class="philosophy-visual">
+          <img src="assets/images/about-studio.jpg" alt="Estudo de modelos e maquetes no estúdio Talfe em luz suave">
+        </div>
+
+        <div class="philosophy-content">
+          <h2 class="philosophy-title">Arquitetura com essência. <em>Para pessoas.</em></h2>
+          <div class="philosophy-description" style="display: flex; flex-direction: column; gap: 1.5rem; font-size: 1.125rem; line-height: 1.6; color: var(--text-secondary);">
+            <p>
+              Acreditamos que a arquitetura vai muito além de criar espaços bonitos. Cada ambiente conta uma história, guarda memórias e faz parte da rotina de quem o vive. Por isso, nosso trabalho começa sempre pela escuta: entender os desejos, as necessidades e a essência de cada cliente é o que dá significado a cada projeto.
+            </p>
+            <p>
+              Para nós, arquitetura é sobre pessoas. É entender histórias, necessidades e sonhos para transformá-los em espaços que acolhem, inspiram e fazem sentido no dia a dia. Acreditamos que cada projeto é único e deve refletir a identidade de quem irá vivê-lo. Com sensibilidade, criatividade e atenção aos detalhes, buscamos criar ambientes que unem beleza, funcionalidade e bem-estar, tornando cada espaço uma extensão da vida de seus moradores.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Archives (Tipologias Arquitetônicas) -->
+  <section class="section bento-section" id="arquivos">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="hero-badge" style="margin-bottom: 1rem;">Tipologias de Projeto</div>
+          <h2 class="section-title">O Arquivo Espacial.</h2>
+          <p class="section-subtext">
+            Explore nossa pesquisa aplicada em diferentes escalas e demandas contemporâneas.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bento Grid: 5 cells with visual variation -->
+      <div class="bento-grid">
+        <div class="bento-card col-7" data-project-id="zenith">
+          <img src="assets/images/project-zenith.jpg" alt="Pavilhão Zenital">
+          <div class="bento-overlay">
+            <span class="bento-category">Estudo de Forma</span>
+            <h3 class="bento-title">Pavilhões &amp; Luz Superior</h3>
+          </div>
+        </div>
+
+        <div class="bento-card col-5" data-project-id="brise">
+          <img src="assets/images/project-brise.jpg" alt="Casa das Brises">
+          <div class="bento-overlay">
+            <span class="bento-category">Conforto Térmico</span>
+            <h3 class="bento-title">Fachadas Vivas &amp; Brises</h3>
+          </div>
+        </div>
+
+        <div class="bento-card col-4" data-project-id="lumina">
+          <img src="assets/images/project-lumina.jpg" alt="Residências contemporâneas">
+          <div class="bento-overlay">
+            <span class="bento-category">Casas Autorais</span>
+            <h3 class="bento-title">Arquitetura Residencial</h3>
+          </div>
+        </div>
+
+        <div class="bento-card col-4" data-project-id="loft">
+          <img src="assets/images/project-loft.jpg" alt="Design de interiores otimizado">
+          <div class="bento-overlay">
+            <span class="bento-category">Espaço Inteligente</span>
+            <h3 class="bento-title">Interiores &amp; Otimização</h3>
+          </div>
+        </div>
+
+        <div class="bento-card col-4" data-project-id="minimal">
+          <img src="assets/images/project-minimal.jpg" alt="Espaços culturais e corporativos">
+          <div class="bento-overlay">
+            <span class="bento-category">Espaços Coletivos</span>
+            <h3 class="bento-title">Galerias &amp; Corporativo</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- Contact & Manifesto -->
+  <section class="section contact-section" id="contato">
+    <div class="container">
+      <div class="contact-card">
+        <div class="contact-grid">
+          <div class="contact-info-wrap">
+            <h2>Vamos projetar seu espaço com a luz certa?</h2>
+            <p>
+              Compartilhe suas ideias, metragem ou intenções de projeto. Nossa equipe avaliará os aspectos solares e espaciais para propor a melhor solução arquitetônica.
+            </p>
+
+            <div class="contact-channels">
+              <div class="channel-item">
+                <div class="channel-icon">✉</div>
+                <span>contato@talfe.arq.br</span>
+              </div>
+              <div class="channel-item">
+                <div class="channel-icon">✆</div>
+                <span>+55 (11) 3450-8920 · WhatsApp</span>
+              </div>
+            </div>
+          </div>
+
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label for="userName" class="form-label">Nome Completo</label>
+              <input type="text" id="userName" class="form-input" placeholder="Seu nome" required>
+            </div>
+            <div class="form-group">
+              <label for="userEmail" class="form-label">E-mail</label>
+              <input type="email" id="userEmail" class="form-input" placeholder="seuemail@dominio.com" required>
+            </div>
+            <div class="form-group">
+              <label for="projectType" class="form-label">Tipo de Projeto</label>
+              <select id="projectType" class="form-input" style="background-color: #232B25; color: #FFFFFF;" required>
+                <option value="" disabled selected>Selecione uma opção</option>
+                <option value="residencial">Arquitetura Residencial Autoral</option>
+                <option value="reforma">Otimização &amp; Reforma de Interiores</option>
+                <option value="corporativo">Espaço Corporativo ou Comercial</option>
+                <option value="consultoria">Consultoria de Iluminação Natural</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="userMessage" class="form-label">Mensagem ou Detalhes</label>
+              <textarea id="userMessage" class="form-textarea" placeholder="Conte-nos sobre o local, objetivos e prazos..." required></textarea>
+            </div>
+            <button type="submit" class="form-submit-btn">
+              <span>Enviar Consulta Arquitetônica</span>
+              <span>→</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none">
+            <text x="10" y="40" font-family="'Times New Roman', serif" font-size="38" font-weight="400" letter-spacing="0.05em" fill="currentColor">
+              TALFE
+            </text>
+            <text x="12" y="54" font-family="'Outfit', system-ui, sans-serif" font-size="6" font-weight="400" letter-spacing="0.25em" fill="currentColor">
+              ARQUITETURA . ENGENHARIA . DESING
+            </text>
+          </svg>
+          <p>
+            Estúdio independente de arquitetura contemporânea, dedicado ao estudo da iluminação natural e à otimização inteligente de espaços vitais.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul class="footer-links">
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#obras">Obras</a></li>
+            <li><a href="#sobre">Sobre o Estúdio</a></li>
+            <li><a href="#arquivos">Tipologias</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Tipologias</h4>
+          <ul class="footer-links">
+            <li><a href="#obras">Residencial Autoral</a></li>
+            <li><a href="#obras">Interiores Otimizados</a></li>
+            <li><a href="#arquivos">Pavilhões &amp; Pátios</a></li>
+            <li><a href="#arquivos">Fachadas &amp; Brises</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Atendimento</h4>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">
+            Segunda a Sexta: 09h às 18h<br>
+            Mediante agendamento
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 talfe arquitetura. Todos os direitos reservados.</p>
+        <div class="footer-socials">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">ArchDaily</a>
+          <a href="#" target="_blank" rel="noopener">Pinterest</a>
+          <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive Project Modal -->
+  <div class="modal-overlay" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Fechar detalhes do projeto">✕</button>
+      <div class="modal-media">
+        <button class="carousel-btn prev-btn" id="carouselPrev" aria-label="Imagem anterior" style="display: none;">‹</button>
+        <img id="modalImg" src="" alt="Fotografia do projeto">
+        <button class="carousel-btn next-btn" id="carouselNext" aria-label="Próxima imagem" style="display: none;">›</button>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-title" id="modalTitle">Nome do Projeto</h3>
+        <div class="modal-specs-row" id="modalSpecs">Metragens e Orientação</div>
+        <p class="modal-desc" id="modalDesc">Descrição do projeto...</p>
+        <a href="#contato" class="btn btn-primary" onclick="document.getElementById('projectModal').classList.remove('open'); document.body.style.overflow='';">
+          <span>Consultar Viabilidade deste Conceito</span>
+          <span class="btn-pill-icon">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Feedback -->
+  <div class="toast-notice" id="toastNotice">
+    <span>✓</span>
+    <span>Mensagem enviada com sucesso! Entraremos em contato em breve.</span>
+  </div>
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+
+  <!-- Script -->
+  <script src="js/main.js"></script>
+</body>
+</html>

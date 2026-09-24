@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TALFE Admin - Painel de Gestão</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- Login Screen -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-logo">
+        <span class="logo-serif">TALFE</span>
+        <span class="logo-sub">PAINEL ADMINISTRATIVO</span>
+      </div>
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label for="adminEmail">E-mail</label>
+          <input type="email" id="adminEmail" placeholder="admin@talfe.arq.br" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="adminPassword">Senha</label>
+          <input type="password" id="adminPassword" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <div class="login-error" id="loginError"></div>
+        <button type="submit" class="btn-login" id="loginBtn">
+          <span>Entrar</span>
+        </button>
+      </form>
+      <a href="../index.html" class="back-link">← Voltar ao site</a>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div class="admin-layout" id="adminDashboard" style="display:none;">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-serif">TALFE</span>
+        <span class="logo-sub">ADMIN</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-tab="contacts" id="tabContacts">
+          <span class="nav-icon">✉</span>
+          <span>Contatos</span>
+          <span class="nav-badge" id="contactsBadge" style="display:none;"></span>
+        </button>
+        <button class="nav-item" data-tab="projects" id="tabProjects">
+          <span class="nav-icon">◫</span>
+          <span>Projetos</span>
+        </button>
+        <button class="nav-item" data-tab="new-project" id="tabNewProject">
+          <span class="nav-icon">+</span>
+          <span>Novo Projeto</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <span id="adminUserEmail" class="admin-email"></span>
+        <button class="btn-logout" id="logoutBtn">Sair</button>
+        <a href="../index.html" class="btn-view-site">Ver Site ↗</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- Contacts Tab -->
+      <section class="tab-panel active" id="panelContacts">
+        <div class="panel-header">
+          <h1>Mensagens de Contato</h1>
+          <button class="btn-refresh" id="refreshContacts">↻ Atualizar</button>
+        </div>
+        <div class="contacts-list" id="contactsList">
+          <div class="loading-state">Carregando mensagens...</div>
+        </div>
+      </section>
+
+      <!-- Projects Tab -->
+      <section class="tab-panel" id="panelProjects">
+        <div class="panel-header">
+          <h1>Portfólio de Projetos</h1>
+          <button class="btn-primary-admin" id="goToNewProject">+ Novo Projeto</button>
+        </div>
+        <div class="projects-admin-grid" id="projectsAdminGrid">
+          <div class="loading-state">Carregando projetos...</div>
+        </div>
+      </section>
+
+      <!-- New / Edit Project Tab -->
+      <section class="tab-panel" id="panelNewProject">
+        <div class="panel-header">
+          <h1 id="projectFormTitle">Novo Projeto</h1>
+        </div>
+        <form class="project-form" id="projectForm">
+          <input type="hidden" id="editProjectId">
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="projTitle">Título do Projeto *</label>
+              <input type="text" id="projTitle" placeholder="Ex: Residência Solar" required>
+            </div>
+            <div class="form-group">
+              <label for="projSlug">Slug (ID único) *</label>
+              <input type="text" id="projSlug" placeholder="Ex: residencia-solar" required pattern="[a-z0-9\-]+">
+              <small>Apenas letras minúsculas, números e hifens</small>
+            </div>
+            <div class="form-group">
+              <label for="projTag">Categoria/Tag</label>
+              <input type="text" id="projTag" placeholder="Ex: Residencial, Interiores">
+            </div>
+            <div class="form-group">
+              <label for="projCategory">Tipologia</label>
+              <select id="projCategory">
+                <option value="residencial">Residencial</option>
+                <option value="interiores">Interiores</option>
+                <option value="corporativo">Corporativo</option>
+                <option value="cultural">Cultural</option>
+                <option value="estudo">Estudo de Luz</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="projSpecs">Especificações</label>
+              <input type="text" id="projSpecs" placeholder="Ex: 320 m² · São Paulo · Madeira & Concreto">
+            </div>
+            <div class="form-group full-width">
+              <label for="projDesc">Descrição do Projeto *</label>
+              <textarea id="projDesc" placeholder="Descreva o projeto, conceito e diferenciais..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="projSortOrder">Ordem de exibição</label>
+              <input type="number" id="projSortOrder" value="0" min="0">
+            </div>
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="projFeatured">
+                <span>Destaque no portfólio</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Image Upload Section -->
+          <div class="image-upload-section">
+            <h3>Imagens do Projeto</h3>
+            <div class="upload-zone" id="uploadZone">
+              <input type="file" id="imageUpload" accept="image/*" multiple style="display:none;">
+              <div class="upload-prompt" id="uploadPrompt">
+                <span class="upload-icon">↑</span>
+                <p>Clique para selecionar ou arraste imagens aqui</p>
+                <small>JPG, PNG, WEBP · Máx 5MB por imagem</small>
+              </div>
+              <div class="upload-progress" id="uploadProgress" style="display:none;">
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <span id="progressText">Enviando...</span>
+              </div>
+            </div>
+            <div class="images-preview" id="imagesPreview"></div>
+            <input type="hidden" id="projImages" value="[]">
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-cancel" id="cancelEdit">Cancelar</button>
+            <button type="submit" class="btn-save" id="saveProjectBtn">
+              <span>Salvar Projeto</span>
+            </button>
+          </div>
+          <div class="form-message" id="formMessage"></div>
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="confirm-modal" id="confirmModal" style="display:none;">
+    <div class="confirm-dialog">
+      <h3>Confirmar exclusão</h3>
+      <p>Tem certeza que deseja excluir este projeto? Esta ação não pode ser desfeita.</p>
+      <div class="confirm-actions">
+        <button class="btn-cancel-modal" id="cancelDelete">Cancelar</button>
+        <button class="btn-confirm-delete" id="confirmDelete">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
