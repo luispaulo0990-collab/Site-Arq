@@ -393,68 +393,417 @@ p {
   flex-wrap: wrap;
 }
 
-/* Hero Visual Composition */
+/* ==========================================================================
+   HERO 3D WINDOW DEPTH COMPOSITION (Taste Skill: Variance 8 / Motion 6)
+   ========================================================================== */
 .hero-visual {
   position: relative;
-  border-radius: var(--radius-lg);
+  perspective: 1200px;
+  perspective-origin: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.hero-image-card {
+.hero-window-card {
   position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-elevated);
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  aspect-ratio: 4/4.6;
+  width: 100%;
+  aspect-ratio: 4/4.7;
+  max-height: 640px;
+  border-radius: 28px;
+  transform-style: preserve-3d;
+  transition: transform 0.25s var(--ease-spring);
+  will-change: transform;
 }
 
-.hero-image-card img {
+/* Subtle breathing ambient float when resting */
+.hero-window-card.is-ambient {
+  animation: heroWindowAmbient 8s ease-in-out infinite alternate;
+}
+
+@keyframes heroWindowAmbient {
+  0% {
+    transform: perspective(1200px) rotateX(1deg) rotateY(-1.5deg) translateY(0);
+  }
+  50% {
+    transform: perspective(1200px) rotateX(-1.2deg) rotateY(1.2deg) translateY(-5px);
+  }
+  100% {
+    transform: perspective(1200px) rotateX(1deg) rotateY(-1.5deg) translateY(0);
+  }
+}
+
+/* Architectural Window Aperture Bezel */
+.window-inner-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 30px 70px -15px rgba(21, 24, 22, 0.16),
+    0 10px 24px -8px rgba(21, 24, 22, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 2px rgba(21, 24, 22, 0.04);
+  transform-style: preserve-3d;
+}
+
+/* Layer 1: Base Architectural Construction Image */
+.window-layer-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.construction-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.2s var(--ease-spring);
-}
-
-.hero-image-card:hover img {
-  transform: scale(1.03);
-}
-
-/* Floating Architectural Micro-Badge */
-.floating-light-tag {
-  position: absolute;
-  bottom: 1.75rem;
-  left: 1.75rem;
-  background-color: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
-  padding: 1rem 1.25rem;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
-  max-width: 250px;
-  transition: transform var(--transition-base);
-}
-
-.floating-light-tag:hover {
-  transform: translateY(-2px);
-}
-
-.floating-light-tag .tag-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent-sage);
-  margin-bottom: 0.25rem;
+  object-position: center 25%;
+  transform: scale(1.08) translate3d(var(--img-tx, 0px), var(--img-ty, 0px), 0);
+  transition: transform 0.2s var(--ease-spring), filter 0.4s ease;
   display: block;
 }
 
-.floating-light-tag .tag-title {
+/* Dynamic Volumetric Sunbeam & Specular Sheen (Moves with cursor in 3D) */
+.depth-light-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--sheen-x, 75%) var(--sheen-y, 25%),
+    rgba(255, 250, 240, 0.4) 0%,
+    rgba(255, 245, 225, 0.18) 35%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  mix-blend-mode: soft-light;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.depth-shadow-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.12) 0%,
+    rgba(0, 0, 0, 0) 30%,
+    rgba(0, 0, 0, 0.06) 60%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  z-index: 3;
+}
+
+/* Layer 2: Architectural Technical Blueprint / Datum Layer (Parallax Depth) */
+.window-layer-datum {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: translateZ(28px) translate3d(var(--datum-tx, 0px), var(--datum-ty, 0px), 0);
+  transform-style: preserve-3d;
+  transition: transform 0.2s var(--ease-spring), opacity 0.3s ease;
+  z-index: 6;
+}
+
+/* Datum Elevation Tag at Top Right */
+.datum-tag-top {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.9rem;
+  background: rgba(22, 26, 23, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-pill);
+  color: #FFFFFF;
   font-family: var(--font-display);
-  font-size: 0.9375rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+}
+
+.datum-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #8CE09D;
+  box-shadow: 0 0 8px #8CE09D;
+  animation: pulseBeacon 2s infinite ease-in-out;
+}
+
+@keyframes pulseBeacon {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.5;
+  }
+}
+
+/* Precision registration crosshairs */
+.datum-crosshair {
+  position: absolute;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.55);
+  user-select: none;
+}
+.datum-crosshair.ch-tl { top: 1.25rem; left: 1.25rem; }
+.datum-crosshair.ch-tr { top: 1.25rem; right: 1.25rem; }
+.datum-crosshair.ch-bl { bottom: 1.25rem; left: 1.25rem; }
+.datum-crosshair.ch-br { bottom: 1.25rem; right: 1.25rem; }
+
+/* Axis lines and technical annotations */
+.datum-axis-badge {
+  position: absolute;
+  top: 48%;
+  left: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.65rem;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.datum-sun-angle {
+  position: absolute;
+  top: 4.25rem;
+  right: 1.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Layer 3: Floating Status Badge in 3D Foreground */
+.window-layer-card {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  max-width: 330px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  padding: 1.15rem 1.25rem;
+  box-shadow: 
+    0 18px 40px -10px rgba(21, 24, 22, 0.18),
+    0 4px 14px rgba(21, 24, 22, 0.08);
+  transform: translateZ(52px) translate3d(var(--card-tx, 0px), var(--card-ty, 0px), 0);
+  transform-style: preserve-3d;
+  transition: transform 0.2s var(--ease-spring), box-shadow 0.3s ease;
+  z-index: 10;
+}
+
+.construction-status-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.45rem;
+}
+
+.status-tag-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.status-dot-active {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #4E6050;
+  box-shadow: 0 0 6px rgba(78, 96, 80, 0.4);
+}
+
+.status-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #4E6050;
+}
+
+.phase-code {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.construction-card-title {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
   font-weight: 600;
   color: var(--text-primary);
-  line-height: 1.3;
+  line-height: 1.25;
+  margin-bottom: 0.2rem;
+}
+
+.construction-card-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+.construction-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.meter-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.meter-percent {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.meter-track {
+  width: 100%;
+  height: 4px;
+  background-color: rgba(21, 24, 22, 0.08);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #748A76 0%, #4D644F 100%);
+  border-radius: var(--radius-pill);
+  transition: width 1.2s var(--ease-spring);
+}
+
+/* Layer 4: Interactive Depth Mode Switch (Top Left) */
+.depth-mode-toggle {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s var(--ease-spring);
+  z-index: 12;
+  transform: translateZ(40px);
+}
+
+.depth-mode-toggle:hover {
+  background: #FFFFFF;
+  transform: translateZ(44px) scale(1.04);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.depth-mode-toggle:active {
+  transform: translateZ(40px) scale(0.97);
+}
+
+.toggle-icon-cam {
+  width: 14px;
+  height: 14px;
+  stroke: var(--accent-sage);
+}
+
+.depth-hint-badge {
+  padding: 0.15rem 0.4rem;
+  background-color: var(--accent-sage-wash);
+  color: var(--accent-sage);
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Raio-X / Blueprint Mode Effect */
+.hero-window-card.is-blueprint .construction-image {
+  filter: contrast(1.15) brightness(0.88) grayscale(0.2);
+}
+
+.hero-window-card.is-blueprint .window-inner-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.hero-window-card.is-blueprint .depth-mode-toggle {
+  background-color: var(--text-primary);
+  color: #FFFFFF;
+  border-color: var(--text-primary);
+}
+
+.hero-window-card.is-blueprint .depth-mode-toggle .toggle-icon-cam {
+  stroke: #8CE09D;
+}
+
+.hero-window-card.is-blueprint .depth-hint-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+}
+
+/* Outer Ambient Drop Shadow */
+.window-ambient-shadow {
+  position: absolute;
+  bottom: -15px;
+  left: 5%;
+  right: 5%;
+  height: 30px;
+  background: radial-gradient(ellipse at center, rgba(21, 24, 22, 0.22) 0%, rgba(21, 24, 22, 0) 70%);
+  filter: blur(10px);
+  pointer-events: none;
+  z-index: -1;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 /* ==========================================================================
@@ -1357,8 +1706,10 @@ p {
     max-width: 100%;
   }
   
+  .hero-window-card,
   .hero-image-card {
-    aspect-ratio: 16/10;
+    aspect-ratio: 4/4.4;
+    max-height: 540px;
   }
   
   .projects-grid {
@@ -1456,5 +1807,41 @@ p {
   .footer-top {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .hero-window-card {
+    aspect-ratio: 4/4.5;
+    max-height: 480px;
+    border-radius: 22px;
+  }
+  
+  .window-inner-frame {
+    border-radius: 22px;
+  }
+
+  .window-layer-card {
+    max-width: none;
+    left: 1.15rem;
+    right: 1.15rem;
+    bottom: 1.15rem;
+    padding: 1rem 1.15rem;
+  }
+  
+  .datum-axis-badge,
+  .datum-sun-angle {
+    display: none;
+  }
+  
+  .datum-tag-top {
+    font-size: 0.6875rem;
+    padding: 0.32rem 0.7rem;
+    top: 1.15rem;
+    right: 1.15rem;
+  }
+  
+  .depth-mode-toggle {
+    top: 1.15rem;
+    left: 1.15rem;
+    padding: 0.35rem 0.75rem;
   }
 }

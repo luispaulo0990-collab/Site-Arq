@@ -335,6 +335,177 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => toastNotice.classList.remove('show'), 5000);
   }
 
+  // 6. Interactive 3D Architectural Window Depth Engine
+  function initHeroWindowDepth() {
+    const heroVisual = document.getElementById('heroVisual');
+    const heroCard = document.getElementById('heroWindowCard');
+    const toggleBtn = document.getElementById('depthModeToggle');
+    const toggleLabel = document.getElementById('toggleLabel');
+
+    if (!heroVisual || !heroCard) return;
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Interactive Blueprint Mode Toggle
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isBlueprint = heroCard.classList.toggle('is-blueprint');
+        if (toggleLabel) {
+          toggleLabel.textContent = isBlueprint ? 'Raio-X Ativo' : 'Camadas 3D';
+        }
+      });
+    }
+
+    if (prefersReducedMotion) {
+      heroCard.classList.remove('is-ambient');
+      return;
+    }
+
+    let targetRotX = 0;
+    let targetRotY = 0;
+    let currentRotX = 0;
+    let currentRotY = 0;
+
+    let targetImgTx = 0;
+    let targetImgTy = 0;
+    let currentImgTx = 0;
+    let currentImgTy = 0;
+
+    let targetDatumTx = 0;
+    let targetDatumTy = 0;
+    let currentDatumTx = 0;
+    let currentDatumTy = 0;
+
+    let targetCardTx = 0;
+    let targetCardTy = 0;
+    let currentCardTx = 0;
+    let currentCardTy = 0;
+
+    let sheenX = 75;
+    let sheenY = 25;
+    let currentSheenX = 75;
+    let currentSheenY = 25;
+
+    let isHovering = false;
+    let rafId = null;
+
+    const LERP_FACTOR = 0.09;
+
+    function updatePhysics() {
+      // Smooth interpolation for spring tilt
+      currentRotX += (targetRotX - currentRotX) * LERP_FACTOR;
+      currentRotY += (targetRotY - currentRotY) * LERP_FACTOR;
+
+      currentImgTx += (targetImgTx - currentImgTx) * LERP_FACTOR;
+      currentImgTy += (targetImgTy - currentImgTy) * LERP_FACTOR;
+
+      currentDatumTx += (targetDatumTx - currentDatumTx) * LERP_FACTOR;
+      currentDatumTy += (targetDatumTy - currentDatumTy) * LERP_FACTOR;
+
+      currentCardTx += (targetCardTx - currentCardTx) * LERP_FACTOR;
+      currentCardTy += (targetCardTy - currentCardTy) * LERP_FACTOR;
+
+      currentSheenX += (sheenX - currentSheenX) * LERP_FACTOR;
+      currentSheenY += (sheenY - currentSheenY) * LERP_FACTOR;
+
+      // Apply 3D transforms via CSS properties
+      heroCard.style.transform = `perspective(1200px) rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg)`;
+      heroCard.style.setProperty('--img-tx', `${currentImgTx.toFixed(2)}px`);
+      heroCard.style.setProperty('--img-ty', `${currentImgTy.toFixed(2)}px`);
+      heroCard.style.setProperty('--datum-tx', `${currentDatumTx.toFixed(2)}px`);
+      heroCard.style.setProperty('--datum-ty', `${currentDatumTy.toFixed(2)}px`);
+      heroCard.style.setProperty('--card-tx', `${currentCardTx.toFixed(2)}px`);
+      heroCard.style.setProperty('--card-ty', `${currentCardTy.toFixed(2)}px`);
+      heroCard.style.setProperty('--sheen-x', `${currentSheenX.toFixed(1)}%`);
+      heroCard.style.setProperty('--sheen-y', `${currentSheenY.toFixed(1)}%`);
+
+      // Keep animation running while hovering or until values settle
+      const isSettled =
+        Math.abs(targetRotX - currentRotX) < 0.02 &&
+        Math.abs(targetRotY - currentRotY) < 0.02;
+
+      if (isHovering || !isSettled) {
+        rafId = requestAnimationFrame(updatePhysics);
+      } else {
+        rafId = null;
+        if (!isHovering) {
+          heroCard.classList.add('is-ambient');
+        }
+      }
+    }
+
+    function handleMouseMove(e) {
+      const rect = heroVisual.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Normalized coordinates (-0.5 to 0.5)
+      const nx = Math.max(-0.5, Math.min(0.5, (x / rect.width) - 0.5));
+      const ny = Math.max(-0.5, Math.min(0.5, (y / rect.height) - 0.5));
+
+      // 3D Rotation angles (degrees)
+      targetRotX = -ny * 14;
+      targetRotY = nx * 16;
+
+      // Differential parallax offsets across depth layers
+      targetImgTx = -nx * 20; // counter-parallax for background
+      targetImgTy = -ny * 20;
+
+      targetDatumTx = nx * 14; // mid-layer datum float
+      targetDatumTy = ny * 14;
+
+      targetCardTx = nx * 22; // foreground card float
+      targetCardTy = ny * 22;
+
+      // Light sheen reflection position
+      sheenX = (nx + 0.5) * 100;
+      sheenY = (ny + 0.5) * 100;
+
+      if (!isHovering) {
+        isHovering = true;
+        heroCard.classList.remove('is-ambient');
+        if (!rafId) {
+          rafId = requestAnimationFrame(updatePhysics);
+        }
+      }
+    }
+
+    function handleMouseLeave() {
+      isHovering = false;
+      targetRotX = 0;
+      targetRotY = 0;
+      targetImgTx = 0;
+      targetImgTy = 0;
+      targetDatumTx = 0;
+      targetDatumTy = 0;
+      targetCardTx = 0;
+      targetCardTy = 0;
+      sheenX = 75;
+      sheenY = 25;
+
+      if (!rafId) {
+        rafId = requestAnimationFrame(updatePhysics);
+      }
+    }
+
+    heroVisual.addEventListener('mousemove', handleMouseMove, { passive: true });
+    heroVisual.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+
+    // Touch device support (touchmove)
+    heroVisual.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches.length > 0) {
+        handleMouseMove(e.touches[0]);
+      }
+    }, { passive: true });
+
+    heroVisual.addEventListener('touchend', handleMouseLeave, { passive: true });
+  }
+
+  // Initialize depth engine
+  initHeroWindowDepth();
+
   // Initialize Supabase data load
   loadProjectsFromSupabase();
 });
