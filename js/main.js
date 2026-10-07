@@ -335,14 +335,16 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => toastNotice.classList.remove('show'), 5000);
   }
 
-  // 6. Interactive 3D Architectural Window Depth Engine
+  // 6. Interactive 3D Architectural Scene & Parallax Depth Engine
   function initHeroWindowDepth() {
-    const heroVisual = document.getElementById('heroVisual');
-    const heroCard = document.getElementById('heroWindowCard');
+    const heroSection = document.getElementById('inicio');
+    const heroBgScene = document.getElementById('heroBgScene');
+    const heroContent = document.getElementById('heroContent');
+    const heroDock = document.getElementById('heroFloatingDock');
     const toggleBtn = document.getElementById('depthModeToggle');
     const toggleLabel = document.getElementById('toggleLabel');
 
-    if (!heroVisual || !heroCard) return;
+    if (!heroSection || !heroBgScene) return;
 
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -351,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (toggleBtn) {
       toggleBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const isBlueprint = heroCard.classList.toggle('is-blueprint');
+        const isBlueprint = heroSection.classList.toggle('is-blueprint');
         if (toggleLabel) {
           toggleLabel.textContent = isBlueprint ? 'Raio-X Ativo' : 'Camadas 3D';
         }
@@ -359,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (prefersReducedMotion) {
-      heroCard.classList.remove('is-ambient');
+      heroSection.classList.remove('is-ambient');
       return;
     }
 
@@ -378,20 +380,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentDatumTx = 0;
     let currentDatumTy = 0;
 
-    let targetCardTx = 0;
-    let targetCardTy = 0;
-    let currentCardTx = 0;
-    let currentCardTy = 0;
+    let targetContentTx = 0;
+    let targetContentTy = 0;
+    let currentContentTx = 0;
+    let currentContentTy = 0;
 
-    let sheenX = 75;
-    let sheenY = 25;
-    let currentSheenX = 75;
-    let currentSheenY = 25;
+    let targetDockTx = 0;
+    let targetDockTy = 0;
+    let currentDockTx = 0;
+    let currentDockTy = 0;
+
+    let sheenX = 65;
+    let sheenY = 35;
+    let currentSheenX = 65;
+    let currentSheenY = 35;
 
     let isHovering = false;
     let rafId = null;
 
-    const LERP_FACTOR = 0.09;
+    const LERP_FACTOR = 0.08;
 
     function updatePhysics() {
       // Smooth interpolation for spring tilt
@@ -404,24 +411,35 @@ document.addEventListener('DOMContentLoaded', () => {
       currentDatumTx += (targetDatumTx - currentDatumTx) * LERP_FACTOR;
       currentDatumTy += (targetDatumTy - currentDatumTy) * LERP_FACTOR;
 
-      currentCardTx += (targetCardTx - currentCardTx) * LERP_FACTOR;
-      currentCardTy += (targetCardTy - currentCardTy) * LERP_FACTOR;
+      currentContentTx += (targetContentTx - currentContentTx) * LERP_FACTOR;
+      currentContentTy += (targetContentTy - currentContentTy) * LERP_FACTOR;
+
+      currentDockTx += (targetDockTx - currentDockTx) * LERP_FACTOR;
+      currentDockTy += (targetDockTy - currentDockTy) * LERP_FACTOR;
 
       currentSheenX += (sheenX - currentSheenX) * LERP_FACTOR;
       currentSheenY += (sheenY - currentSheenY) * LERP_FACTOR;
 
-      // Apply 3D transforms via CSS properties
-      heroCard.style.transform = `perspective(1200px) rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg)`;
-      heroCard.style.setProperty('--img-tx', `${currentImgTx.toFixed(2)}px`);
-      heroCard.style.setProperty('--img-ty', `${currentImgTy.toFixed(2)}px`);
-      heroCard.style.setProperty('--datum-tx', `${currentDatumTx.toFixed(2)}px`);
-      heroCard.style.setProperty('--datum-ty', `${currentDatumTy.toFixed(2)}px`);
-      heroCard.style.setProperty('--card-tx', `${currentCardTx.toFixed(2)}px`);
-      heroCard.style.setProperty('--card-ty', `${currentCardTy.toFixed(2)}px`);
-      heroCard.style.setProperty('--sheen-x', `${currentSheenX.toFixed(1)}%`);
-      heroCard.style.setProperty('--sheen-y', `${currentSheenY.toFixed(1)}%`);
+      // Apply 3D transforms to background scene and foreground elements
+      heroBgScene.style.transform = `perspective(1400px) rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg)`;
+      heroBgScene.style.setProperty('--img-tx', `${currentImgTx.toFixed(2)}px`);
+      heroBgScene.style.setProperty('--img-ty', `${currentImgTy.toFixed(2)}px`);
+      heroBgScene.style.setProperty('--datum-tx', `${currentDatumTx.toFixed(2)}px`);
+      heroBgScene.style.setProperty('--datum-ty', `${currentDatumTy.toFixed(2)}px`);
+      heroBgScene.style.setProperty('--sheen-x', `${currentSheenX.toFixed(1)}%`);
+      heroBgScene.style.setProperty('--sheen-y', `${currentSheenY.toFixed(1)}%`);
 
-      // Keep animation running while hovering or until values settle
+      if (heroContent) {
+        heroContent.style.setProperty('--content-tx', `${currentContentTx.toFixed(2)}px`);
+        heroContent.style.setProperty('--content-ty', `${currentContentTy.toFixed(2)}px`);
+      }
+
+      if (heroDock) {
+        heroDock.style.setProperty('--dock-tx', `${currentDockTx.toFixed(2)}px`);
+        heroDock.style.setProperty('--dock-ty', `${currentDockTy.toFixed(2)}px`);
+      }
+
+      // Check settling threshold
       const isSettled =
         Math.abs(targetRotX - currentRotX) < 0.02 &&
         Math.abs(targetRotY - currentRotY) < 0.02;
@@ -431,13 +449,13 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         rafId = null;
         if (!isHovering) {
-          heroCard.classList.add('is-ambient');
+          heroSection.classList.add('is-ambient');
         }
       }
     }
 
     function handleMouseMove(e) {
-      const rect = heroVisual.getBoundingClientRect();
+      const rect = heroSection.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
@@ -446,26 +464,29 @@ document.addEventListener('DOMContentLoaded', () => {
       const ny = Math.max(-0.5, Math.min(0.5, (y / rect.height) - 0.5));
 
       // 3D Rotation angles (degrees)
-      targetRotX = -ny * 14;
-      targetRotY = nx * 16;
+      targetRotX = -ny * 7;
+      targetRotY = nx * 8;
 
       // Differential parallax offsets across depth layers
-      targetImgTx = -nx * 20; // counter-parallax for background
-      targetImgTy = -ny * 20;
+      targetImgTx = -nx * 34; // counter-parallax for wide panorama
+      targetImgTy = -ny * 26;
 
-      targetDatumTx = nx * 14; // mid-layer datum float
+      targetDatumTx = nx * 18; // mid-layer datum markers
       targetDatumTy = ny * 14;
 
-      targetCardTx = nx * 22; // foreground card float
-      targetCardTy = ny * 22;
+      targetContentTx = nx * 12; // foreground typography
+      targetContentTy = ny * 10;
 
-      // Light sheen reflection position
+      targetDockTx = nx * 22; // foreground dock card
+      targetDockTy = ny * 16;
+
+      // Specular sheen tracking
       sheenX = (nx + 0.5) * 100;
       sheenY = (ny + 0.5) * 100;
 
       if (!isHovering) {
         isHovering = true;
-        heroCard.classList.remove('is-ambient');
+        heroSection.classList.remove('is-ambient');
         if (!rafId) {
           rafId = requestAnimationFrame(updatePhysics);
         }
@@ -480,27 +501,29 @@ document.addEventListener('DOMContentLoaded', () => {
       targetImgTy = 0;
       targetDatumTx = 0;
       targetDatumTy = 0;
-      targetCardTx = 0;
-      targetCardTy = 0;
-      sheenX = 75;
-      sheenY = 25;
+      targetContentTx = 0;
+      targetContentTy = 0;
+      targetDockTx = 0;
+      targetDockTy = 0;
+      sheenX = 65;
+      sheenY = 35;
 
       if (!rafId) {
         rafId = requestAnimationFrame(updatePhysics);
       }
     }
 
-    heroVisual.addEventListener('mousemove', handleMouseMove, { passive: true });
-    heroVisual.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    heroSection.addEventListener('mousemove', handleMouseMove, { passive: true });
+    heroSection.addEventListener('mouseleave', handleMouseLeave, { passive: true });
 
     // Touch device support (touchmove)
-    heroVisual.addEventListener('touchmove', (e) => {
+    heroSection.addEventListener('touchmove', (e) => {
       if (e.touches && e.touches.length > 0) {
         handleMouseMove(e.touches[0]);
       }
     }, { passive: true });
 
-    heroVisual.addEventListener('touchend', handleMouseLeave, { passive: true });
+    heroSection.addEventListener('touchend', handleMouseLeave, { passive: true });
   }
 
   // Initialize depth engine
