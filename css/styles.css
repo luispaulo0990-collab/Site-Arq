@@ -374,14 +374,94 @@ p {
   transform-style: preserve-3d;
 }
 
-.hero-bg-image {
+/* Atmospheric Ambient Gradient Mesh (Architectural Luminous Field) */
+.hero-bg-gradient-field {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at var(--sheen-x, 68%) var(--sheen-y, 34%), rgba(255, 253, 247, 0.88) 0%, rgba(248, 246, 240, 0.45) 36%, transparent 72%),
+    radial-gradient(circle at 65% 40%, rgba(163, 171, 149, 0.26) 0%, rgba(220, 224, 211, 0.12) 42%, transparent 74%),
+    radial-gradient(circle at 12% 16%, rgba(255, 255, 255, 0.95) 0%, transparent 60%),
+    linear-gradient(135deg, #F9F7F2 0%, #F4F1EA 52%, #ECE8DE 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Subtle Architectural Spatial Grid (Drafting Matrix) */
+.hero-bg-mesh-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(86, 104, 88, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(86, 104, 88, 0.045) 1px, transparent 1px);
+  background-size: 52px 52px;
+  background-position: center center;
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+/* Monumental Architectural Logo Canvas Wrap (3D Spatial Stage) */
+.hero-logo-canvas-wrap {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 38%;
-  transform: scale(1.08) translate3d(var(--img-tx, 0px), var(--img-ty, 0px), 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+  transform: translateZ(36px) translate3d(var(--img-tx, 0px), var(--img-ty, 0px), 0);
+  transform-style: preserve-3d;
+  transition: transform 0.2s var(--ease-spring);
+}
+
+.hero-monumental-logo-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 1400px;
+  max-height: 92vh;
+  overflow: visible;
+  filter: drop-shadow(0 20px 48px rgba(22, 25, 23, 0.06));
+  transform-style: preserve-3d;
+}
+
+/* Multi-Plane Depth Layers inside SVG */
+.hero-logo-datum-traces {
+  transition: opacity 0.3s ease;
+  transform: translateZ(18px) translate3d(calc(var(--datum-tx, 0px) * 0.7), calc(var(--datum-ty, 0px) * 0.7), 0);
+}
+
+.hero-logo-watermark-plane {
+  transform: translateZ(-18px) translate3d(calc(var(--img-tx, 0px) * 0.35), calc(var(--img-ty, 0px) * 0.35), 0);
+  transform-style: preserve-3d;
+}
+
+.hero-logo-glyph-sculpture {
+  transform: translateZ(48px) translate3d(calc(var(--img-tx, 0px) * 1.15), calc(var(--img-ty, 0px) * 1.15), 0);
+  transform-style: preserve-3d;
   transition: transform 0.2s var(--ease-spring), filter 0.4s ease;
-  display: block;
+}
+
+.glyph-box-rect {
+  transition: stroke 0.4s ease, filter 0.4s ease;
+}
+
+.glyph-sun-core {
+  animation: sunCoreBreath 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes sunCoreBreath {
+  0% {
+    transform: scale(1);
+    transform-origin: 628px 222px;
+  }
+  100% {
+    transform: scale(1.08);
+    transform-origin: 628px 222px;
+  }
 }
 
 /* Volumetric Sunbeam & Specular Sheen (Reacts to cursor in 3D) */
@@ -391,18 +471,18 @@ p {
   pointer-events: none;
   background: radial-gradient(
     circle at var(--sheen-x, 65%) var(--sheen-y, 35%),
-    rgba(255, 248, 225, 0.42) 0%,
-    rgba(255, 240, 210, 0.2) 35%,
-    rgba(255, 255, 255, 0) 70%
+    rgba(255, 250, 232, 0.48) 0%,
+    rgba(255, 242, 218, 0.22) 34%,
+    rgba(255, 255, 255, 0) 72%
   );
   mix-blend-mode: soft-light;
   transition: opacity 0.3s ease;
-  z-index: 2;
+  z-index: 3;
 }
 
 /* Architectural Backdrop Scrim:
    Guarantees high contrast readability for text on the left,
-   while letting the monumental concrete structure and sunset shine on center/right */
+   while letting the sculptural background logo and warm gradient shine on center/right */
 .hero-backdrop-scrim {
   position: absolute;
   inset: 0;
@@ -411,19 +491,19 @@ p {
       90deg,
       rgba(248, 246, 240, 0.96) 0%,
       rgba(248, 246, 240, 0.90) 36%,
-      rgba(248, 246, 240, 0.52) 58%,
-      rgba(248, 246, 240, 0.15) 80%,
-      rgba(248, 246, 240, 0.04) 100%
+      rgba(248, 246, 240, 0.46) 58%,
+      rgba(248, 246, 240, 0.12) 80%,
+      rgba(248, 246, 240, 0.02) 100%
     ),
     linear-gradient(
       180deg,
-      rgba(248, 246, 240, 0.7) 0%,
+      rgba(248, 246, 240, 0.65) 0%,
       transparent 18%,
       transparent 76%,
       rgba(248, 246, 240, 0.98) 100%
     );
   pointer-events: none;
-  z-index: 3;
+  z-index: 4;
 }
 
 /* Architectural Technical Datum Layer (Parallax Midground) */
@@ -760,21 +840,26 @@ p {
   letter-spacing: 0.05em;
 }
 
-/* Raio-X / Blueprint Mode Effect */
-.hero-section.is-blueprint .hero-bg-image {
-  filter: contrast(1.15) brightness(0.85) grayscale(0.25);
+/* Technical Blueprint Drafting Mode */
+.hero-section.is-blueprint .hero-bg-mesh-grid {
+  opacity: 1;
+  background-image: 
+    linear-gradient(rgba(78, 96, 80, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(78, 96, 80, 0.14) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
-.hero-section.is-blueprint .hero-bg-media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(78, 96, 80, 0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(78, 96, 80, 0.18) 1px, transparent 1px);
-  background-size: 36px 36px;
-  pointer-events: none;
-  z-index: 4;
+.hero-section.is-blueprint .hero-logo-datum-traces {
+  opacity: 1;
+}
+
+.hero-section.is-blueprint .glyph-box-rect {
+  stroke: #324335;
+  filter: drop-shadow(0 0 16px rgba(140, 224, 157, 0.35));
+}
+
+.hero-section.is-blueprint .glyph-sun-core {
+  filter: drop-shadow(0 0 12px #8CE09D);
 }
 
 .hero-section.is-blueprint .depth-mode-toggle {
@@ -788,8 +873,8 @@ p {
 }
 
 .hero-section.is-blueprint .depth-hint-badge {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
+  background-color: rgba(140, 224, 157, 0.22);
+  color: #8CE09D;
 }
 
 /* ==========================================================================
@@ -1703,6 +1788,11 @@ p {
     max-width: 100%;
   }
 
+  .hero-monumental-logo-svg {
+    max-width: 960px;
+    transform: scale(0.92) translateX(4%);
+  }
+
   .hero-backdrop-scrim {
     background: 
       linear-gradient(
@@ -1830,6 +1920,12 @@ p {
     right: 1rem;
     font-size: 0.6875rem;
     padding: 0.32rem 0.75rem;
+  }
+
+  .hero-monumental-logo-svg {
+    max-width: 100%;
+    transform: scale(0.85) translateX(0);
+    opacity: 0.65;
   }
 
   .floating-construction-card {

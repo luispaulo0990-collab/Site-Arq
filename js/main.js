@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.stopPropagation();
         const isBlueprint = heroSection.classList.toggle('is-blueprint');
         if (toggleLabel) {
-          toggleLabel.textContent = isBlueprint ? 'Raio-X Ativo' : 'Camadas 3D';
+          toggleLabel.textContent = isBlueprint ? 'Modo Técnico' : 'Camadas 3D';
         }
       });
     }
